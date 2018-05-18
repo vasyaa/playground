@@ -9,8 +9,6 @@
 #include <utility>
 #include <stdint.h>
 
-#include <map>
-
 namespace algorithms {
 namespace avl_tree {
 

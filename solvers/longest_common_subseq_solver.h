@@ -1,5 +1,5 @@
-#ifndef LONGEST_INCREASING_SUBSEQ_H_
-#define LONGEST_INCREASING_SUBSEQ_H_
+#ifndef SOLVERS_LONGEST_COMMON_SUBSEQ_H_
+#define SOLVERS_LONGEST_COMMON_SUBSEQ_H_
 
 #include <vector>
 #include <string>
@@ -194,4 +194,4 @@ inline void test() {
 }
 }
 
-#endif /* LONGEST_INCREASING_SUBSEQ_H_ */
+#endif /* SOLVERS_LONGEST_COMMON_SUBSEQ_H_ */

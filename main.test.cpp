@@ -1,3 +1,4 @@
+#include "solvers/scheduling_jobs_solver.h"
 #include "solvers/knapsack_solver.h"
 #include "algorithms/avl_tree.h"
 #include "solvers/activity_selection_solver.h"
@@ -14,6 +15,8 @@
 using namespace std;
 
 int main(void) {
+    solvers::scheduling_jobs_solver::test();
+
     solvers::knapsack_solver::test();
     solvers::longest_common_subseq_solver::test();
 

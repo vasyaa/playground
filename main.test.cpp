@@ -1,3 +1,4 @@
+#include "algorithms/graph.h"
 #include "mt/work_scheduling.h"
 #include "solvers/scheduling_jobs_solver.h"
 #include "solvers/knapsack_solver.h"
@@ -16,8 +17,7 @@
 using namespace std;
 
 int main(void) {
-    work_scheduling::test();
-    return 0;
+    graph::test();
 
     solvers::scheduling_jobs_solver::test();
 

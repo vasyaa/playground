@@ -1,5 +1,5 @@
-#ifndef GRAPH_H_
-#define GRAPH_H_
+#ifndef ALGORITHMS_GRAPH_H_
+#define ALGORITHMS_GRAPH_H_
 
 #include <iostream>
 #include <algorithm>
@@ -105,4 +105,4 @@ inline void test() {
 }
 
 
-#endif /* GRAPH_H_ */
+#endif /* ALGORITHMS_GRAPH_H_ */

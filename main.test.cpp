@@ -1,3 +1,4 @@
+#include "mt/work_scheduling.h"
 #include "solvers/scheduling_jobs_solver.h"
 #include "solvers/knapsack_solver.h"
 #include "algorithms/avl_tree.h"
@@ -15,6 +16,9 @@
 using namespace std;
 
 int main(void) {
+    work_scheduling::test();
+    return 0;
+
     solvers::scheduling_jobs_solver::test();
 
     solvers::knapsack_solver::test();

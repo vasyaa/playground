@@ -1,5 +1,6 @@
-CXX?=clang++-6.0
-CXXFLAGS =	-std=c++17 -g -Wall -Werror=sign-compare -MMD -MF $@.d
+#CXX?=clang++-6.0
+CXX?=g++-8
+CXXFLAGS = -g -Wall -Werror=sign-compare -MMD -MF $@.d
 OBJS =		main.test.o algorithms/avl_tree.t.o 
 # algorithms/disjoint_set.t.o todo/shared_ptr.t.o
 
@@ -19,4 +20,3 @@ run: $(TARGET)
 	./$(TARGET)
 
 -include *.d */*.d
-

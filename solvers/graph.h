@@ -2,13 +2,15 @@
 #define SOLVERS_GRAPH_H_
 
 #include <iostream>
+#include <cassert>
+
 #include <algorithm>
 #include <vector>
 #include <stack>
 #include <queue>
 #include <list>
 #include <iterator>
-#include <cassert>
+#include <queue>
 
 namespace graph {
 
@@ -23,6 +25,7 @@ class Graph {
 public:
     const int INF = 1000000;
     const int UNDEF = -1;
+    typedef std::vector<int> return_type;
 
     Graph(int size) {
         adj = vector<vector<Node>>(size);
@@ -33,8 +36,8 @@ public:
         adj[a].push_back(Node{b, w});
     }
 
-    std::list<int> bfs(const int a, const int b) {
-        list<int> rc;
+    return_type bfs(const int a, const int b) {
+        return_type rc;
         vector<int> visited(adj.size(), 0);
 
         deque<int> q;
@@ -59,11 +62,11 @@ public:
             }
         }
 //        cout << endl;
-        return list<int>();
+        return return_type();
     }
 
-    list<int> dfs(const int a_, const int b) {
-        list<int> rc;
+    return_type dfs(const int a_, const int b) {
+        return_type rc;
         vector<int> visited(adj.size(), 0);
 
         stack<int> s;
@@ -87,7 +90,26 @@ public:
 
         }
 
-        return list<int>();
+        return return_type();
+    }
+
+    return_type reversePath(const vector<int>& prev, int b) {
+        return_type rc;
+
+        stack<int> s;
+        int u = b;
+        while(prev[u] != UNDEF) {
+            s.push(u);
+            u = prev[u];
+        }
+        s.push(u);
+
+        while(!s.empty()) {
+            int u = s.top();
+            s.pop();
+            rc.push_back(u);
+        }
+        return rc;
     }
 
     int minDistNode(const std::vector<int>& dist,
@@ -104,10 +126,7 @@ public:
     }
 
     // https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-    std::list<int> dijkstra(int a, int b) {
-
-        std::list<int> rc;
-
+    std::vector<int> dijkstra(int a, int b) {
         vector<int> visited(adj.size(), 0);
 
         std::vector<int> dist(adj.size(), INF);
@@ -131,20 +150,23 @@ public:
 //        copy(dist.begin(), dist.end(), ostream_iterator<int>(cout, " "));
 //        cout << endl;
 
-        stack<int> s;
-        int u = b;
-        while(prev[u] != UNDEF) {
-            s.push(u);
-            u = prev[u];
-        }
-        s.push(u);
+        return_type rc;
+        rc = reversePath(prev, b);
 
-        while(!s.empty()) {
-            int u = s.top();
-            s.pop();
-            rc.push_back(u);
-        }
+        return rc;
+    }
 
+    return_type dijkstraPQ(int a, int b) {
+        throw std::runtime_error("Not implemented");
+
+        std::vector<int> dist(adj.size(), INF);
+        dist[a] = 0;
+
+        std::vector<int> prev = std::vector<int>(adj.size(), UNDEF);
+
+        std::priority_queue<int, vector<int> > q;
+
+        return_type rc;
         return rc;
     }
 
@@ -169,7 +191,7 @@ inline void test() {
     g.add(2, 3);
     g.add(3, 4);
 
-    list<int> rc;
+    Graph::return_type rc;
 
     rc = g.bfs(0, 4);
     copy(rc.begin(), rc.end(), ostream_iterator<int>(cout, " "));

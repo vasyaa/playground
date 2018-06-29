@@ -7,6 +7,7 @@
 
 #include <cassert>
 #include <cstring>
+#include <cassert>
 
 namespace solvers {
 namespace knapsack_solver {
@@ -16,6 +17,7 @@ using namespace std;
 class KnapsackSolver {
 public:
     void init(const int W, const std::vector<int>& val, const std::vector<int>& wt) {
+        assert(val.size() == wt.size());
         this->W = W;
         this->val = val;
         this->wt = wt;

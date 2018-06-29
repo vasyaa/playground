@@ -1,4 +1,4 @@
-#include "algorithms/graph.h"
+#include "solvers/graph.h"
 #include "mt/work_scheduling.h"
 #include "solvers/scheduling_jobs_solver.h"
 #include "solvers/knapsack_solver.h"
@@ -19,19 +19,19 @@ using namespace std;
 int main(void) {
     graph::test();
 
-    solvers::scheduling_jobs_solver::test();
-
-    solvers::knapsack_solver::test();
-    solvers::longest_common_subseq_solver::test();
-
-    solvers::merge_overlapping_intervals_solver::test();
-    solvers::activity_selection_solver::test();
-    algorithms::avl_tree::test();
-    algorithms::disjoint_set_simple::test();
-    algorithms::disjoint_set_simple_map::test();
-
-//    algorithms::shared_ptr::test();
-//    algorithms::big_num::test();
-//    algorithms::disjoint_set::test();
+//    solvers::scheduling_jobs_solver::test();
+//
+//    solvers::knapsack_solver::test();
+//    solvers::longest_common_subseq_solver::test();
+//
+//    solvers::merge_overlapping_intervals_solver::test();
+//    solvers::activity_selection_solver::test();
+//    algorithms::avl_tree::test();
+//    algorithms::disjoint_set_simple::test();
+//    algorithms::disjoint_set_simple_map::test();
+//
+////    algorithms::shared_ptr::test();
+////    algorithms::big_num::test();
+////    algorithms::disjoint_set::test();
 return 0;
 }

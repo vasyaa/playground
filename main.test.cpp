@@ -1,6 +1,6 @@
+#include "solvers/weighted_jobs_scheduling.h"
 #include "solvers/graph.h"
 #include "mt/work_scheduling.h"
-#include "solvers/scheduling_jobs_solver.h"
 #include "solvers/knapsack_solver.h"
 #include "algorithms/avl_tree.h"
 #include "solvers/activity_selection_solver.h"
@@ -10,6 +10,7 @@
 //#include "algorithms/disjoint_set.h"
 #include "algorithms/disjoint_set_simple.h"
 #include "algorithms/disjoint_set_simple_map.h"
+#include "solvers/jobs_scheduling_solver.h"
 
 //#include "todo/big_int.h"
 //#include "todo/shared_ptr.h"
@@ -17,7 +18,8 @@
 using namespace std;
 
 int main(void) {
-    graph::test();
+//    graph::test();
+    solvers::weighted_jobs_scheduling::test();
 
 //    solvers::scheduling_jobs_solver::test();
 //

@@ -5,8 +5,8 @@
  *      Author: vasyaa
  */
 
-#ifndef SOLVERS_SCHEDULING_JOBS_SOLVER_H_
-#define SOLVERS_SCHEDULING_JOBS_SOLVER_H_
+#ifndef SOLVERS_JOBS_SCHEDULING_SOLVER_H_
+#define SOLVERS_JOBS_SCHEDULING_SOLVER_H_
 
 #include <vector>
 #include <iostream>
@@ -14,7 +14,7 @@
 #include <cassert>
 
 namespace solvers {
-namespace scheduling_jobs_solver {
+namespace jobs_scheduling_solver {
 
 using namespace std;
 
@@ -191,4 +191,4 @@ inline void test() {
 }
 
 
-#endif /* SOLVERS_SCHEDULING_JOBS_SOLVER_H_ */
+#endif /* SOLVERS_JOBS_SCHEDULING_SOLVER_H_ */

@@ -1,7 +1,7 @@
 CXX?=clang++-6.0
 #CXX?=g++-8
 CXXFLAGS = -g -Wall -Werror=sign-compare -MMD -MF $@.d
-OBJS =		playground.o algorithms/avl_tree.t.o 
+OBJS =		playground.o algorithms/avl_tree.test.o  incubator/simple_any.test.o
 # algorithms/disjoint_set.t.o todo/shared_ptr.t.o
 
 LIBS =

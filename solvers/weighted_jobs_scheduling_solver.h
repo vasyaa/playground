@@ -44,7 +44,7 @@ namespace internal {
 
 template <
     typename ContainerType = std::vector<Job>,
-    typename RefContainerType = std::vector<Job>
+    typename RefContainerType = std::vector<std::reference_wrapper<Job>>
     >
 class WeightedJobSchedulingBase {
 public:

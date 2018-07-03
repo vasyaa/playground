@@ -93,7 +93,7 @@ template <>
 class WeightedJobScheduling<RECURSIVE_SOLVER>
     : public WeightedJobSchedulingBase<> {
 public:
-    std::tuple<int, container_type> solve() {
+    std::tuple< int, const container_type> solve() {
         std::sort(data.begin(), data.end());
 
         calc_p();
@@ -123,7 +123,7 @@ template <>
 class WeightedJobScheduling<DP_SOLVER>
     : public WeightedJobSchedulingBase<> {
 public:
-    std::tuple<int, ref_container_type> solve() {
+    std::tuple<const int, const ref_container_type> solve() {
         std::sort(data.begin(), data.end());
         calc_p();
         dp = std::vector<int>(data.size(),0);
@@ -171,7 +171,7 @@ inline void test_impl(const std::vector<Job>& arr) {
 
     auto res = sch.solve();
     auto &rc = std::get<1>(res);
-    int val = std::get<0>(res);
+    auto val = std::get<0>(res);
 
     std::cout << "value=" << val << std::endl;
     std::cout << "path:" << std::endl;

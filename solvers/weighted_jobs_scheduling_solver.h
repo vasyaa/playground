@@ -44,7 +44,8 @@ namespace internal {
 
 template <
     typename ContainerType = std::vector<Job>,
-    typename RefContainerType = std::vector<std::reference_wrapper<Job>>
+//    typename RefContainerType = std::vector<std::reference_wrapper<Job>>
+    typename RefContainerType = std::vector<Job>
     >
 class WeightedJobSchedulingBase {
 public:
@@ -60,7 +61,8 @@ public:
     }
 
 protected:
-    ContainerType data;
+    container_type data;
+    ref_container_type path;
     std::vector<int> p;
 
     void calc_p() {
@@ -93,13 +95,13 @@ template <>
 class WeightedJobScheduling<RECURSIVE_SOLVER>
     : public WeightedJobSchedulingBase<> {
 public:
-    std::tuple< int, const container_type> solve() {
+    std::tuple< int, const ref_container_type> solve() {
         std::sort(data.begin(), data.end());
 
         calc_p();
 
         int res = recursive_compute_opt(data.size() - 1);
-        return make_tuple(res, container_type());
+        return make_tuple(res, ref_container_type());
     }
 
 private:
@@ -137,7 +139,7 @@ public:
 
 private:
     std::vector<int> dp;
-    ref_container_type path;
+//    ref_container_type path;
 
     int iterative_compute_opt() {
         dp = std::vector<int>(data.size(), 0);
@@ -153,7 +155,9 @@ private:
             return;
         }
         if(data[j].weight + dp[p[j]] > dp[j - 1]) {
-            path.push_back(std::reference_wrapper<Job>(data[j]));
+            auto& d = data[j];
+//            auto a = std::reference_wrapper<solvers::weighted_jobs_scheduling::Job>(d);
+            path.push_back(d);
             recreate_path(p[j - 1]);
         }
         else {
@@ -162,31 +166,7 @@ private:
     }
 };
 
-template <typename SolverType>
-inline void test_impl(const std::vector<Job>& arr) {
-    SolverType sch;
-    for(auto &i: arr) {
-        sch.add(i);
-    }
-
-    auto res = sch.solve();
-    auto &rc = std::get<1>(res);
-    auto val = std::get<0>(res);
-
-    std::cout << "value=" << val << std::endl;
-    std::cout << "path:" << std::endl;
-    std::copy(rc.begin(), rc.end(), std::ostream_iterator<Job>(std::cout, "\n"));
-}
-
-inline void test() {
-    std::vector<Job> arr = {{3, 10, 20}, {1, 2, 50}, {6, 19, 100}, {2, 100, 200}};
-
-    std::cout << "Recursive solution" << std::endl;
-    test_impl<WeightedJobScheduling<RECURSIVE_SOLVER>>(arr);
-
-    std::cout << "DP solution" << std::endl;
-    test_impl<WeightedJobScheduling<DP_SOLVER>>(arr);
-}
+void test();
 
 }
 }

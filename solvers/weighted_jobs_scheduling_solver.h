@@ -23,7 +23,6 @@
 namespace solvers {
 namespace weighted_jobs_scheduling {
 
-namespace internal {
 struct Job {
     int start;
     int finish;
@@ -41,10 +40,16 @@ struct Job {
     }
 };
 
-template <typename ContainerType>
+namespace internal {
+
+template <
+    typename ContainerType = std::vector<Job>,
+    typename RefContainerType = std::vector<Job>
+    >
 class WeightedJobSchedulingBase {
 public:
     typedef ContainerType container_type;
+    typedef RefContainerType ref_container_type;
 
     WeightedJobSchedulingBase() {
         data = ContainerType(1);
@@ -75,8 +80,6 @@ protected:
 
 using namespace internal;
 
-//typedef std::vector<Job> container_type;
-
 enum {
     RECURSIVE_SOLVER = 1,
     DP_SOLVER = 2
@@ -88,7 +91,7 @@ class WeightedJobScheduling;
 // recursive solution
 template <>
 class WeightedJobScheduling<RECURSIVE_SOLVER>
-    : public WeightedJobSchedulingBase<std::vector<Job>> {
+    : public WeightedJobSchedulingBase<> {
 public:
     std::tuple<int, container_type> solve() {
         std::sort(data.begin(), data.end());
@@ -118,15 +121,15 @@ private:
 // bottom up solution
 template <>
 class WeightedJobScheduling<DP_SOLVER>
-    : public WeightedJobSchedulingBase<std::vector<Job>> {
+    : public WeightedJobSchedulingBase<> {
 public:
-    std::tuple<int, container_type> solve() {
+    std::tuple<int, ref_container_type> solve() {
         std::sort(data.begin(), data.end());
         calc_p();
         dp = std::vector<int>(data.size(),0);
 
         int res = iterative_compute_opt();
-        path = container_type();
+        path.clear();
         recreate_path(data.size() - 1);
         std::reverse(path.begin(), path.end());
         return make_tuple(res, path);
@@ -134,7 +137,7 @@ public:
 
 private:
     std::vector<int> dp;
-    std::vector<Job> path;
+    ref_container_type path;
 
     int iterative_compute_opt() {
         dp = std::vector<int>(data.size(), 0);
@@ -150,7 +153,7 @@ private:
             return;
         }
         if(data[j].weight + dp[p[j]] > dp[j - 1]) {
-            path.push_back(data[j]);
+            path.push_back(std::reference_wrapper<Job>(data[j]));
             recreate_path(p[j - 1]);
         }
         else {

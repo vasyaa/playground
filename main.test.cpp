@@ -1,4 +1,3 @@
-#include "solvers/weighted_jobs_scheduling.h"
 #include "solvers/graph.h"
 #include "mt/work_scheduling.h"
 #include "solvers/knapsack_solver.h"
@@ -11,6 +10,7 @@
 #include "algorithms/disjoint_set_simple.h"
 #include "algorithms/disjoint_set_simple_map.h"
 #include "solvers/jobs_scheduling_solver.h"
+#include "solvers/weighted_jobs_scheduling_solver.h"
 
 //#include "todo/big_int.h"
 //#include "todo/shared_ptr.h"

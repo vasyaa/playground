@@ -5,8 +5,8 @@
  *      Author: vasyaa
  */
 
-#ifndef SOLVERS_WEIGHTED_JOBS_SCHEDULING_H_
-#define SOLVERS_WEIGHTED_JOBS_SCHEDULING_H_
+#ifndef SOLVERS_WEIGHTED_JOBS_SCHEDULING_SOLVER_H_
+#define SOLVERS_WEIGHTED_JOBS_SCHEDULING_SOLVER_H_
 
 //
 // https://courses.cs.washington.edu/courses/cse521/13wi/slides/06dp-sched.pdf
@@ -145,4 +145,4 @@ inline void test() {
 }
 }
 
-#endif /* SOLVERS_WEIGHTED_JOBS_SCHEDULING_H_ */
+#endif /* SOLVERS_WEIGHTED_JOBS_SCHEDULING_SOLVER_H_ */

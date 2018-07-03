@@ -12,6 +12,7 @@
 #include <iterator>
 #include <queue>
 
+namespace solvers {
 namespace graph {
 
 using namespace std;
@@ -174,41 +175,9 @@ private:
     vector<vector<Node>> adj;
 };
 
-/*
-0 1 1 0 0
-1 0 1 0 0
-1 1 0 1 0
-0 0 1 0 1
-0 0 0 1 0
- */
-
-inline void test() {
-    Graph g(5);
-    g.add(0, 1);
-    g.add(0, 2, 8);
-    g.add(1, 2);
-    g.add(2, 0);
-    g.add(2, 3);
-    g.add(3, 4);
-
-    Graph::return_type rc;
-
-    rc = g.bfs(0, 4);
-    copy(rc.begin(), rc.end(), ostream_iterator<int>(cout, " "));
-    cout << endl;
-
-    rc = g.dfs(0, 4);
-    copy(rc.begin(), rc.end(), ostream_iterator<int>(cout, " "));
-    cout << endl;
-
-    g.add(0, 4, 5);
-
-    rc = g.dijkstra(0, 4);
-    copy(rc.begin(), rc.end(), ostream_iterator<int>(cout, " "));
-    cout << endl;
-}
+void test();
 
 }
-
+}
 
 #endif /* SOLVERS_GRAPH_H_ */

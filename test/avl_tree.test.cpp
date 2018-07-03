@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cassert>
-#include "avl_tree.h"
+#include "../algorithms/avl_tree.h"
 
 using namespace std;
 

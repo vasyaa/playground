@@ -20,7 +20,7 @@ using namespace std;
 
 int main(void) {
     simple_any::test();
-//    graph::test();
+    solvers::graph::test();
 //    solvers::weighted_jobs_scheduling::test();
 
 //    solvers::scheduling_jobs_solver::test();

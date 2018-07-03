@@ -18,12 +18,12 @@
 #include <algorithm>
 #include <iterator>
 #include <tuple>
-
 #include <iostream>
 
 namespace solvers {
 namespace weighted_jobs_scheduling {
 
+namespace internal {
 struct Job {
     int start;
     int finish;
@@ -41,17 +41,22 @@ struct Job {
     }
 };
 
-typedef std::vector<Job> container_type;
-
-class WeightedJbScheduling {
+template <typename ContainerType>
+class WeightedJobSchedulingBase {
 public:
-    WeightedJbScheduling() {
-        data = std::vector<Job>(1);
+    typedef ContainerType container_type;
+
+    WeightedJobSchedulingBase() {
+        data = ContainerType(1);
     }
 
     void add(const Job& i) {
         data.push_back(i);
     }
+
+protected:
+    ContainerType data;
+    std::vector<int> p;
 
     void calc_p() {
         p = std::vector<int>(data.size(), 0);
@@ -64,8 +69,37 @@ public:
             }
         }
     }
+};
 
-    // recursive solution
+} // end ns
+
+using namespace internal;
+
+//typedef std::vector<Job> container_type;
+
+enum {
+    RECURSIVE_SOLVER = 1,
+    DP_SOLVER = 2
+};
+
+template <int T>
+class WeightedJobScheduling;
+
+// recursive solution
+template <>
+class WeightedJobScheduling<RECURSIVE_SOLVER>
+    : public WeightedJobSchedulingBase<std::vector<Job>> {
+public:
+    std::tuple<int, container_type> solve() {
+        std::sort(data.begin(), data.end());
+
+        calc_p();
+
+        int res = recursive_compute_opt(data.size() - 1);
+        return make_tuple(res, container_type());
+    }
+
+private:
     int recursive_compute_opt(int j) {
         if(j == 0) {
             return 0;
@@ -79,7 +113,29 @@ public:
         }
     }
 
-    // bottom up solution
+};
+
+// bottom up solution
+template <>
+class WeightedJobScheduling<DP_SOLVER>
+    : public WeightedJobSchedulingBase<std::vector<Job>> {
+public:
+    std::tuple<int, container_type> solve() {
+        std::sort(data.begin(), data.end());
+        calc_p();
+        dp = std::vector<int>(data.size(),0);
+
+        int res = iterative_compute_opt();
+        path = container_type();
+        recreate_path(data.size() - 1);
+        std::reverse(path.begin(), path.end());
+        return make_tuple(res, path);
+    }
+
+private:
+    std::vector<int> dp;
+    std::vector<Job> path;
+
     int iterative_compute_opt() {
         dp = std::vector<int>(data.size(), 0);
         for(int j = 0; j < (int)dp.size(); j++) {
@@ -101,45 +157,32 @@ public:
             recreate_path(p[j - 1]);
         }
     }
-
-    std::tuple<int, container_type> solve() {
-        std::sort(data.begin(), data.end());
-        calc_p();
-        dp = std::vector<int>(data.size(),0);
-
-//        int res = recursive_compute_opt(data.size() - 1);
-        int res = iterative_compute_opt();
-        path = container_type();
-        recreate_path(data.size() - 1);
-        std::reverse(path.begin(), path.end());
-        return make_tuple(res, path);
-    }
-
-private:
-    container_type data;
-    std::vector<int> dp;
-    std::vector<int> p;
-    std::vector<Job> path;
 };
 
-
-inline void test() {
-    Job arr[] = {{3, 10, 20}, {1, 2, 50}, {6, 19, 100}, {2, 100, 200}};
-//    Job arr[] = {{5, 9}, {1, 2}, {3, 4}, {0, 6},
-//                                       {5, 7}, {8, 9}};
-
-//    int n = sizeof(arr)/sizeof(arr[0]);
-
-    WeightedJbScheduling sch;
+template <typename SolverType>
+inline void test_impl(const std::vector<Job>& arr) {
+    SolverType sch;
     for(auto &i: arr) {
         sch.add(i);
     }
 
     auto res = sch.solve();
-    container_type rc = std::get<1>(res);
+    auto &rc = std::get<1>(res);
     int val = std::get<0>(res);
+
     std::cout << "value=" << val << std::endl;
+    std::cout << "path:" << std::endl;
     std::copy(rc.begin(), rc.end(), std::ostream_iterator<Job>(std::cout, "\n"));
+}
+
+inline void test() {
+    std::vector<Job> arr = {{3, 10, 20}, {1, 2, 50}, {6, 19, 100}, {2, 100, 200}};
+
+    std::cout << "Recursive solution" << std::endl;
+    test_impl<WeightedJobScheduling<RECURSIVE_SOLVER>>(arr);
+
+    std::cout << "DP solution" << std::endl;
+    test_impl<WeightedJobScheduling<DP_SOLVER>>(arr);
 }
 
 }

@@ -14,7 +14,8 @@ namespace knapsack_solver {
 
 using namespace std;
 
-class KnapsackSolver {
+namespace internal {
+class KnapsackSolverBase {
 public:
     void init(const int W, const std::vector<int>& val, const std::vector<int>& wt) {
         assert(val.size() == wt.size());
@@ -23,9 +24,27 @@ public:
         this->wt = wt;
     }
 
+protected:
+    int W;
+    std::vector<int> val;
+    std::vector<int> wt;
+};
+} // end ns
+
+template <int T>
+class KnapsackSolver;
+
+enum {
+    RECURSIVE_SOLVER = 1,
+    DP_SOLVER = 2
+};
+
+template <>
+class KnapsackSolver<RECURSIVE_SOLVER> : public internal::KnapsackSolverBase {
+public:
 
     // -------------------------------------------------------------------------
-    int solve_recursive() {
+    int solve() {
         return ks_recursive(W, val, wt, val.size());
     }
 
@@ -41,8 +60,11 @@ public:
 
         return max(a, b);
     }
+};
 
-    // -------------------------------------------------------------------------
+template <>
+class KnapsackSolver<DP_SOLVER> : public internal::KnapsackSolverBase {
+public:
     int solve() {
         return ks_dp(W, val, wt, val.size());
     }
@@ -67,10 +89,6 @@ public:
         }
         return dp[n][W];
     }
-protected:
-    int W;
-    std::vector<int> val;
-    std::vector<int> wt;
 };
 
 
@@ -79,14 +97,16 @@ inline void test() {
     std::vector<int> wt = {10, 20, 30};
     int  W = 50;
 
-    KnapsackSolver s;
-    s.init(W, val, wt);
+    KnapsackSolver<RECURSIVE_SOLVER> rs;
+    rs.init(W, val, wt);
 
-    assert(220 == s.solve_recursive());
-    std::cout << "KnapsackSolver::solve_recusrsive OK" << std::endl;
+    assert(220 == rs.solve());
+    std::cout << "KnapsackSolver<RECURSIVE_SOLVER>::solve OK" << std::endl;
 
-    assert(220 == s.solve());
-    std::cout << "KnapsackSolver::solve OK" << std::endl;
+    KnapsackSolver<DP_SOLVER> dps;
+    dps.init(W, val, wt);
+    assert(220 == dps.solve());
+    std::cout << "KnapsackSolver<DP_SOLVER>::solve OK" << std::endl;
 }
 
 }

@@ -1,12 +1,12 @@
 CXX?=clang++-6.0
 #CXX?=g++-8
 CXXFLAGS = -g -Wall -Werror=sign-compare -MMD -MF $@.d
-OBJS =		main.test.o algorithms/avl_tree.t.o 
+OBJS =		playground.o algorithms/avl_tree.t.o 
 # algorithms/disjoint_set.t.o todo/shared_ptr.t.o
 
 LIBS =
 
-TARGET =	main.test
+TARGET =	playground
 
 $(TARGET):	$(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)

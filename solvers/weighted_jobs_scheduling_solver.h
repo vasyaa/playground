@@ -139,7 +139,6 @@ public:
 
 private:
     std::vector<int> dp;
-//    ref_container_type path;
 
     int iterative_compute_opt() {
         dp = std::vector<int>(data.size(), 0);
@@ -155,7 +154,7 @@ private:
             return;
         }
         if(data[j].weight + dp[p[j]] > dp[j - 1]) {
-            auto& d = data[j];
+            Job& d = data[j];
 //            auto a = std::reference_wrapper<solvers::weighted_jobs_scheduling::Job>(d);
             path.push_back(d);
             recreate_path(p[j - 1]);

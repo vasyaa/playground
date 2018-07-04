@@ -19,6 +19,7 @@
 #include <iterator>
 #include <tuple>
 #include <iostream>
+#include <functional>
 
 namespace solvers {
 namespace weighted_jobs_scheduling {
@@ -44,8 +45,7 @@ namespace internal {
 
 template <
     typename ContainerType = std::vector<Job>,
-//    typename RefContainerType = std::vector<std::reference_wrapper<Job>>
-    typename RefContainerType = std::vector<Job>
+    typename RefContainerType = std::vector<std::reference_wrapper<Job>>
     >
 class WeightedJobSchedulingBase {
 public:
@@ -154,9 +154,7 @@ private:
             return;
         }
         if(data[j].weight + dp[p[j]] > dp[j - 1]) {
-            Job& d = data[j];
-//            auto a = std::reference_wrapper<solvers::weighted_jobs_scheduling::Job>(d);
-            path.push_back(d);
+            path.push_back(std::reference_wrapper<solvers::weighted_jobs_scheduling::Job>(data[j]));
             recreate_path(p[j - 1]);
         }
         else {

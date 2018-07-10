@@ -45,18 +45,19 @@ public:
 
     // -------------------------------------------------------------------------
     int solve() {
-        return ks_recursive(W, val, wt, val.size());
+        std::cout << "Running " << __func__ << std::endl;
+        return ks_recursive(W, val.size());
     }
 
-    int ks_recursive(int W, std::vector<int> val, std::vector<int> wt, int n) {
+    int ks_recursive(int W, int n) {
         if(W == 0 || n == 0) {
             return 0;
         }
         if(wt[n - 1] > W) {
-            return ks_recursive(W, val, wt, n - 1);
+            return ks_recursive(W, n - 1);
         }
-        int a = val[n - 1] + ks_recursive(W - wt[n - 1], val, wt, n - 1);
-        int b = ks_recursive(W, val, wt, n - 1);
+        int a = val[n - 1] + ks_recursive(W - wt[n - 1], n - 1);
+        int b = ks_recursive(W, n - 1);
 
         return max(a, b);
     }
@@ -66,6 +67,7 @@ template <>
 class KnapsackSolver<DP_SOLVER> : public internal::KnapsackSolverBase {
 public:
     int solve() {
+        std::cout << "Running " << __func__ << std::endl;
         return ks_dp(W, val, wt, val.size());
     }
 

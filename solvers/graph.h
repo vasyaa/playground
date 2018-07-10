@@ -19,6 +19,9 @@ using namespace std;
 struct Node {
     int to = 0;
     int w = 0;
+
+    Node() {}
+    Node(int to_, int w_):to(to_), w(w_) {}
 };
 
 
@@ -34,7 +37,7 @@ public:
     void add(int a, int b, int w = 1) {
         assert(a < (int)adj.size());
         assert(b < (int)adj.size());
-        adj[a].push_back(Node{b, w});
+        adj[a].push_back(Node(b, w));
     }
 
     return_type bfs(const int a, const int b) {

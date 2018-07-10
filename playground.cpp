@@ -25,7 +25,7 @@ int main(void) {
 
 //    solvers::scheduling_jobs_solver::test();
 //
-//    solvers::knapsack_solver::test();
+    solvers::knapsack_solver::test();
 //    solvers::longest_common_subseq_solver::test();
 //
 //    solvers::merge_overlapping_intervals_solver::test();
@@ -37,5 +37,5 @@ int main(void) {
 ////    algorithms::shared_ptr::test();
 ////    algorithms::big_num::test();
 ////    algorithms::disjoint_set::test();
-return 0;
+    return 0;
 }

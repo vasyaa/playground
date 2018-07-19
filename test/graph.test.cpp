@@ -44,5 +44,5 @@ void test() {
     cout << endl;
 }
 
-}
-}
+} // namespace graph
+} // namespace solvers

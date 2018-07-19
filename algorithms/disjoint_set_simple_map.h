@@ -1,29 +1,25 @@
 #ifndef ALGORITHMS_DISJOINT_SET_SIMPLE_MAP_H_
 #define ALGORITHMS_DISJOINT_SET_SIMPLE_MAP_H_
 
-
 #include <iostream>
 #include <map>
 
 namespace algorithms {
 namespace disjoint_set_simple_map {
 
-template <typename Key>
-struct disjoint_set {
+template <typename Key> struct disjoint_set {
     typedef std::map<Key, Key> parent_type;
     parent_type parent;
 
-    disjoint_set() {
-    }
+    disjoint_set() {}
 
-    ~disjoint_set() {
-    }
+    ~disjoint_set() {}
 
     int find(int s) {
         check_insert(s);
 
         int root = s;
-        while(root != parent[root]) {
+        while (root != parent[root]) {
             root = parent[root];
         }
         return root;
@@ -37,20 +33,20 @@ struct disjoint_set {
     }
 
     void check_insert(int s) {
-        if(parent.find(s) == parent.end()) {
+        if (parent.find(s) == parent.end()) {
             parent[s] = s;
         }
     }
 
     void print() {
         typename parent_type::iterator it = parent.begin();
-        for(;it != parent.end(); ++it) {
+        for (; it != parent.end(); ++it) {
             std::cout << it->first << ":" << it->second << std::endl;
         }
     }
 
-    disjoint_set(const disjoint_set&) = delete;
-    disjoint_set& operator=(const disjoint_set&) = delete;
+    disjoint_set(const disjoint_set &) = delete;
+    disjoint_set &operator=(const disjoint_set &) = delete;
 };
 
 inline void test() {
@@ -81,7 +77,7 @@ inline void test() {
     std::cout << "disjoint_set_simple_map::disjoint_set OK" << std::endl;
 }
 
-}
-}
+} // namespace disjoint_set_simple_map
+} // namespace algorithms
 
 #endif /* ALGORITHMS_DISJOINT_SET_SIMPLE_MAP_H_ */

@@ -1,12 +1,12 @@
 #ifndef SOLVERS_MERGE_OVERLAPPING_INTERVALS_SOLVER_H_
 #define SOLVERS_MERGE_OVERLAPPING_INTERVALS_SOLVER_H_
 
-#include <vector>
-#include <utility>
 #include <algorithm>
+#include <utility>
+#include <vector>
 
-#include <stack>
 #include <iostream>
+#include <stack>
 
 namespace solvers {
 namespace merge_overlapping_intervals_solver {
@@ -18,31 +18,32 @@ public:
     typedef data_type result_type;
 
     OverlappingIntervalsSolver() = default;
-    OverlappingIntervalsSolver& init(const data_type& dataIn){
+    OverlappingIntervalsSolver &init(const data_type &dataIn) {
         data = dataIn;
         return *this;
     }
 
-    OverlappingIntervalsSolver& add(int a, int b) {
-        data.insert(data.end(), std::make_pair(a,b));
+    OverlappingIntervalsSolver &add(int a, int b) {
+        data.insert(data.end(), std::make_pair(a, b));
         return *this;
     }
 
     result_type solve() {
         std::sort(data.begin(), data.end(),
-                [](interval_type& a, interval_type& b){return a.first < b.first;}
-        );
+                  [](interval_type &a, interval_type &b) {
+                      return a.first < b.first;
+                  });
 
         std::stack<interval_type> s;
 
         s.push(data[0]);
-        for(size_t i = 1; i < data.size(); i++) {
+        for (size_t i = 1; i < data.size(); i++) {
             interval_type p = s.top();
 
-            if(p.second < data[i].first) {
+            if (p.second < data[i].first) {
                 s.push(data[i]);
             }
-            else if(p.second < data[i].second) {
+            else if (p.second < data[i].second) {
                 p.second = data[i].second;
                 s.pop();
                 s.push(p);
@@ -50,7 +51,7 @@ public:
         }
 
         result_type res;
-        while(! s.empty()) {
+        while (!s.empty()) {
             interval_type p = s.top();
             res.insert(res.end(), p);
             s.pop();
@@ -58,27 +59,29 @@ public:
 
         return res;
     }
+
 private:
     data_type data;
 };
 
 inline void test() {
-    OverlappingIntervalsSolver::data_type data = { {6,8}, {1,9}, {2,4}, {4,7} };
+    OverlappingIntervalsSolver::data_type data = {
+        {6, 8}, {1, 9}, {2, 4}, {4, 7}};
 
     OverlappingIntervalsSolver as;
     as.init(data);
-    as.add(8, 9).add(5,9).add(10,23);
+    as.add(8, 9).add(5, 9).add(10, 23);
 
     OverlappingIntervalsSolver::result_type res;
     res = as.solve();
 
-    for(size_t i = 0; i < res.size(); i++) {
+    for (size_t i = 0; i < res.size(); i++) {
         std::cout << res[i].first << ":" << res[i].second << " ";
     }
     std::cout << std::endl;
 }
 
-}
-}
+} // namespace merge_overlapping_intervals_solver
+} // namespace solvers
 
 #endif /* SOLVERS_MERGE_OVERLAPPING_INTERVALS_SOLVER_H_ */

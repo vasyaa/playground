@@ -12,10 +12,9 @@ namespace weighted_jobs_scheduling {
 
 namespace {
 
-template <typename SolverType>
-void test_impl(const std::vector<Job>& arr) {
+template <typename SolverType> void test_impl(const std::vector<Job> &arr) {
     SolverType sch;
-    for(auto &i: arr) {
+    for (auto &i : arr) {
         sch.add(i);
     }
 
@@ -25,13 +24,15 @@ void test_impl(const std::vector<Job>& arr) {
 
     std::cout << "value=" << val << std::endl;
     std::cout << "path:" << std::endl;
-    std::copy(rc.begin(), rc.end(), std::ostream_iterator<Job>(std::cout, "\n"));
+    std::copy(rc.begin(), rc.end(),
+              std::ostream_iterator<Job>(std::cout, "\n"));
 }
 
-}
+} // namespace
 
 void test() {
-    std::vector<Job> arr = {{3, 10, 20}, {1, 2, 50}, {6, 19, 100}, {2, 100, 200}};
+    std::vector<Job> arr = {
+        {3, 10, 20}, {1, 2, 50}, {6, 19, 100}, {2, 100, 200}};
 
     std::cout << "Recursive solution" << std::endl;
     test_impl<WeightedJobScheduling<RECURSIVE_SOLVER>>(arr);
@@ -40,6 +41,5 @@ void test() {
     test_impl<WeightedJobScheduling<DP_SOLVER>>(arr);
 }
 
-}
-}
-
+} // namespace weighted_jobs_scheduling
+} // namespace solvers

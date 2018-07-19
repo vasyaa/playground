@@ -1,16 +1,15 @@
 #ifndef SOLVERS_GRAPH_H_
 #define SOLVERS_GRAPH_H_
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 #include <algorithm>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <list>
 #include <iterator>
+#include <list>
 #include <queue>
+#include <stack>
+#include <vector>
 
 namespace solvers {
 namespace graph {
@@ -21,9 +20,8 @@ struct Node {
     int w = 0;
 
     Node() {}
-    Node(int to_, int w_):to(to_), w(w_) {}
+    Node(int to_, int w_) : to(to_), w(w_) {}
 };
-
 
 class Graph {
 public:
@@ -31,9 +29,7 @@ public:
     const int UNDEF = -1;
     typedef std::vector<int> return_type;
 
-    Graph(int size) {
-        adj = vector<vector<Node>>(size);
-    }
+    Graph(int size) { adj = vector<vector<Node>>(size); }
     void add(int a, int b, int w = 1) {
         assert(a < (int)adj.size());
         assert(b < (int)adj.size());
@@ -48,24 +44,24 @@ public:
         q.push_back(a);
         visited[a] = 1;
 
-        while(!q.empty()) {
+        while (!q.empty()) {
             int a = q.front();
             q.pop_front();
             rc.push_back(a);
-//            cout << a << " ";
+            //            cout << a << " ";
 
-            if(a == b) {
+            if (a == b) {
                 return rc;
             }
 
-            for(auto i = adj[a].begin(); i != adj[a].end(); ++i) {
-                if(!visited[i->to]) {
+            for (auto i = adj[a].begin(); i != adj[a].end(); ++i) {
+                if (!visited[i->to]) {
                     q.push_back(i->to);
                     visited[i->to] = 1;
                 }
             }
         }
-//        cout << endl;
+        //        cout << endl;
         return return_type();
     }
 
@@ -76,39 +72,38 @@ public:
         stack<int> s;
         s.push(a_);
 
-        while(!s.empty()) {
+        while (!s.empty()) {
             int a = s.top();
             s.pop();
             visited[a] = 1;
             rc.push_back(a);
 
-            if(a == b) {
+            if (a == b) {
                 return rc;
             }
 
-            for(auto i = adj[a].begin(); i != adj[a].end(); ++i) {
-                if(!visited[i->to]) {
+            for (auto i = adj[a].begin(); i != adj[a].end(); ++i) {
+                if (!visited[i->to]) {
                     s.push(i->to);
                 }
             }
-
         }
 
         return return_type();
     }
 
-    return_type reversePath(const vector<int>& prev, int b) {
+    return_type reversePath(const vector<int> &prev, int b) {
         return_type rc;
 
         stack<int> s;
         int u = b;
-        while(prev[u] != UNDEF) {
+        while (prev[u] != UNDEF) {
             s.push(u);
             u = prev[u];
         }
         s.push(u);
 
-        while(!s.empty()) {
+        while (!s.empty()) {
             int u = s.top();
             s.pop();
             rc.push_back(u);
@@ -116,12 +111,12 @@ public:
         return rc;
     }
 
-    int minDistNode(const std::vector<int>& dist,
-                    const std::vector<int>& visited) {
+    int minDistNode(const std::vector<int> &dist,
+                    const std::vector<int> &visited) {
         int u = -1;
         int min = INF;
-        for(size_t i = 0; i < dist.size(); i++) {
-            if(min > dist[i] && !visited[i]) {
+        for (size_t i = 0; i < dist.size(); i++) {
+            if (min > dist[i] && !visited[i]) {
                 min = dist[i];
                 u = i;
             }
@@ -138,21 +133,21 @@ public:
 
         std::vector<int> prev = std::vector<int>(adj.size(), UNDEF);
 
-        for(size_t i = 0; i < adj.size() - 1; i++) {
+        for (size_t i = 0; i < adj.size() - 1; i++) {
             int u = minDistNode(dist, visited);
 
             visited[u] = 1;
-            for(auto& k : adj[i]) {
+            for (auto &k : adj[i]) {
                 int v = k.to;
                 int alt = dist[u] + k.w;
-                if(alt < dist[v]) {
+                if (alt < dist[v]) {
                     dist[v] = alt;
                     prev[v] = u;
                 }
             }
         }
-//        copy(dist.begin(), dist.end(), ostream_iterator<int>(cout, " "));
-//        cout << endl;
+        //        copy(dist.begin(), dist.end(), ostream_iterator<int>(cout, "
+        //        ")); cout << endl;
 
         return_type rc;
         rc = reversePath(prev, b);
@@ -168,7 +163,7 @@ public:
 
         std::vector<int> prev = std::vector<int>(adj.size(), UNDEF);
 
-        std::priority_queue<int, vector<int> > q;
+        std::priority_queue<int, vector<int>> q;
 
         return_type rc;
         return rc;
@@ -180,7 +175,7 @@ private:
 
 void test();
 
-}
-}
+} // namespace graph
+} // namespace solvers
 
 #endif /* SOLVERS_GRAPH_H_ */

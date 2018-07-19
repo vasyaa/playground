@@ -7,22 +7,20 @@ namespace algorithms {
 namespace disjoint_set_simple {
 
 struct disjoint_set {
-    int* parent;
+    int *parent;
 
     disjoint_set(int size) {
         parent = new int[size + 1];
-        for(int i = 0; i <= size; i++) {
+        for (int i = 0; i <= size; i++) {
             parent[i] = i;
         }
     }
 
-    ~disjoint_set() {
-        delete [] parent;
-    }
+    ~disjoint_set() { delete[] parent; }
 
     int find(int s) {
         int root = s;
-        while(root != parent[root]) {
+        while (root != parent[root]) {
             root = parent[root];
         }
         return root;
@@ -36,10 +34,10 @@ struct disjoint_set {
     }
 
     void check_insert(int s) {
-//        if()
+        //        if()
     }
-    disjoint_set(const disjoint_set&) = delete;
-    disjoint_set& operator=(const disjoint_set&) = delete;
+    disjoint_set(const disjoint_set &) = delete;
+    disjoint_set &operator=(const disjoint_set &) = delete;
 };
 
 inline void test() {
@@ -69,7 +67,7 @@ inline void test() {
     std::cout << "disjoint_set_simple::disjoint_set OK" << std::endl;
 }
 
-}
-}
+} // namespace disjoint_set_simple
+} // namespace algorithms
 
 #endif /* ALGORITHMS_DISJOINT_SET_SIMPLE_H_ */

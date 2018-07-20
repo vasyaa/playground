@@ -1,6 +1,8 @@
 #include "../incubator/any.h"
 
-namespace simple_any {
+namespace any {
+
+namespace test {
 
 void test() {
     any a(123);
@@ -50,6 +52,7 @@ void test() {
 
     delete pa;
     delete pca;
+}
 }
 
 } // namespace simple_any

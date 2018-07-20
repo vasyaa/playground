@@ -15,7 +15,7 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace simple_any {
+namespace any {
 
 class any;
 
@@ -173,8 +173,11 @@ T *any_cast(any *o) {
 // template< class T, class U, class... Args >
 // std::any make_any( std::initializer_list<U> il, Args&&... args );
 
+namespace test {
+
 void test();
 
+}
 } // namespace simple_any
 
 #endif /* INCUBATOR_ANY_H_ */

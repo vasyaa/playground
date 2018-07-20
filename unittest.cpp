@@ -1,3 +1,4 @@
+#include "algorithms/least_frequently_used.h"
 #include "incubator/any.h"
 #include "algorithms/avl_tree.h"
 //#include "mt/work_scheduling.h"
@@ -19,7 +20,9 @@
 using namespace std;
 
 int main(void) {
-    simple_any::test();
+    least_frequently_used::test::test();
+    any::test::test();
+    return 0;
     solvers::graph::test();
     solvers::weighted_jobs_scheduling::test();
 

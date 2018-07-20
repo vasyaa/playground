@@ -43,3 +43,6 @@ target_link_libraries(unittest playground)
 
 add_test(NAME test COMMAND unittest)
 
+################################################################################
+add_custom_target(run unittest DEPENDS unittest)
+

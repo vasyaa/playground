@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <map>
 #include <ostream>
-#include <queue>
+#include <deque>
 #include <vector>
 
 namespace least_frequently_used {
@@ -42,28 +42,36 @@ class least_frequently_used {
 public:
     using map_type = std::map<K, internal::node<V>>;
     using map_iterator = typename map_type::iterator;
+
     struct my_compare {
         bool operator()(const map_iterator &lh, const map_iterator &rh) {
             return lh->second.counter > rh->second.counter;
         }
     };
 
+//    using queue_type =
+//        std::priority_queue<map_iterator, std::vector<map_iterator>,
+//                            my_compare>;
     using queue_type =
-        std::priority_queue<map_iterator, std::vector<map_iterator>,
-                            my_compare>;
+        std::deque<map_iterator>;
 
     least_frequently_used(const size_t cap) : capacity_(cap) {}
 
     void add(const K &key, const V &val) {
         if (q.size() == capacity_) {
-            map_iterator it = q.top();
-            q.pop();
+            map_iterator it = q.front();
+            q.pop_front();
             m.erase(it);
         }
 
         std::pair<map_iterator, bool> rc =
             m.insert(std::make_pair(key, internal::node<V>(val)));
-        q.push(rc.first);
+        q.push_front(rc.first);
+        std::make_heap(q.begin(), q.end(), my_compare());
+    }
+
+    bool exists(const K &key) {
+        return m.find(key) != m.end();
     }
 
     V &get(const K &key) {
@@ -72,6 +80,7 @@ public:
             throw std::runtime_error("out of bounds index=");
         }
         it->second.counter += 1;
+        std::make_heap(q.begin(), q.end(), my_compare());
         return it->second.value;
     }
 
@@ -85,7 +94,7 @@ public:
 
     void print(std::ostream &str) {
         map_iterator it = m.begin();
-        str << "top: " << q.top()->first << " " << q.top()->second << " -> ";
+        str << "top: " << q.front()->first << " " << q.front()->second << " -> ";
         for (; it != m.end(); ++it) {
             str << it->first << " " << it->second << ", ";
         }

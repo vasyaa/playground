@@ -60,14 +60,19 @@ public:
     void add(const K &key, const V &val) {
         if (q.size() == capacity_) {
             map_iterator it = q.front();
-            q.pop_front();
+//            q.pop_front();
             m.erase(it);
         }
 
         std::pair<map_iterator, bool> rc =
             m.insert(std::make_pair(key, internal::node<V>(val)));
-        q.push_front(rc.first);
-        std::make_heap(q.begin(), q.end(), my_compare());
+        if (q.size() == capacity_) {
+           std::swap(q.front(), rc.first);
+//           std::make_heap(q.begin(), q.end(), my_compare());
+        }
+        else {
+            q.push_front(rc.first);
+        }
     }
 
     bool exists(const K &key) {

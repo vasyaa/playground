@@ -1,5 +1,12 @@
 #include "../algorithms/least_frequently_used.h"
 
+#define ASSERT(expr) do {\
+    if(!(expr)) { \
+    std::cerr << "Assertion failed \"" #expr "\"" << std::endl; \
+    abort(); \
+    } \
+    } while(0)
+
 namespace least_frequently_used {
 namespace test {
 
@@ -42,10 +49,10 @@ void test() {
     lfu.print(std::cout);
     std::cout << std::endl;
 
-    assert(lfu.exists(11) == false);
-    assert(lfu.get_count(12) == 4);
-    assert(lfu.get_count(5) == 3);
-    assert(lfu.get_count(9) == 3);
+    ASSERT(lfu.exists(11) == false);
+    ASSERT(lfu.get_count(12) == 4);
+    ASSERT(lfu.get_count(5) == 3);
+    ASSERT(lfu.get_count(8) == 3);
 }
 
 } // namespace test

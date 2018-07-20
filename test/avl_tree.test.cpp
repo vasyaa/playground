@@ -25,7 +25,8 @@ void print_tree(tree_type &t) {
 
         if (it != t.end()) {
             cout << it->second << " ";
-        } else {
+        }
+        else {
             cout << i << " not found ";
         }
     }
@@ -65,7 +66,8 @@ void test1() {
         if (it != t.end()) {
             //            cout << it->second << endl;
             assert(!(i == 2 || i == 5));
-        } else {
+        }
+        else {
             //            cout << i << " not found" << endl;
             assert(i == 2 || i == 5);
         }

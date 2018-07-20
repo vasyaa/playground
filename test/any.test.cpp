@@ -53,6 +53,6 @@ void test() {
     delete pa;
     delete pca;
 }
-}
+} // namespace test
 
-} // namespace simple_any
+} // namespace any

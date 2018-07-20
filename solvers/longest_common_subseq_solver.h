@@ -19,7 +19,8 @@ enum {
     DP_SOLVER
 };
 
-template <int Type> class LongestCommonSubseqSolver {};
+template <int Type>
+class LongestCommonSubseqSolver {};
 
 typedef LongestCommonSubseqSolver<RECURSIVE_BACK_SOLVER> RecurBackSolver;
 typedef LongestCommonSubseqSolver<RECURSIVE_SOLVER> RecurSolver;
@@ -145,7 +146,8 @@ private:
             for (size_t n = 0; n <= N; n++) {
                 if (m == 0 || n == 0) {
                     dp[m][n] = 0;
-                } else if (a[m - 1] == b[n - 1])
+                }
+                else if (a[m - 1] == b[n - 1])
                     dp[m][n] = 1 + dp[m - 1][n - 1];
                 else
                     dp[m][n] = std::max(dp[m][n - 1], dp[m - 1][n]);

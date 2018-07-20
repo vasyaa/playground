@@ -8,13 +8,13 @@
 #ifndef ALGORITHMS_LEAST_FREQUENTLY_USED_H_
 #define ALGORITHMS_LEAST_FREQUENTLY_USED_H_
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 #include <algorithm>
-#include <queue>
 #include <map>
 #include <ostream>
+#include <queue>
 #include <vector>
 
 namespace least_frequently_used {
@@ -48,7 +48,9 @@ public:
         }
     };
 
-    using queue_type = std::priority_queue<map_iterator, std::vector<map_iterator>, my_compare>;
+    using queue_type =
+        std::priority_queue<map_iterator, std::vector<map_iterator>,
+                            my_compare>;
 
     least_frequently_used(const size_t cap) : capacity_(cap) {}
 
@@ -60,7 +62,7 @@ public:
         }
 
         std::pair<map_iterator, bool> rc =
-                m.insert(std::make_pair(key, internal::node<V>(val)));
+            m.insert(std::make_pair(key, internal::node<V>(val)));
         q.push(rc.first);
     }
 
@@ -88,11 +90,11 @@ public:
             str << it->first << " " << it->second << ", ";
         }
     }
+
 private:
     queue_type q;
     map_type m;
     size_t capacity_;
-
 };
 
 namespace test {

@@ -9,11 +9,13 @@ namespace algorithm {
 
 namespace disjoint_set {
 
-template <typename K> class disjoint_set;
+template <typename K>
+class disjoint_set;
 
 namespace internal {
 
-template <typename K> struct node {
+template <typename K>
+struct node {
     friend class disjoint_set<K>;
     typedef size_t size_type;
 
@@ -32,7 +34,8 @@ private:
 
 } // namespace internal
 
-template <typename K> class disjoint_set {
+template <typename K>
+class disjoint_set {
 public:
     typedef internal::node<K> node_type;
     typedef std::map<int, node_type *> map_type;
@@ -111,7 +114,8 @@ private:
         if (px->rank > py->rank) {
             py->P = px;
             px->size_ += py->size_;
-        } else {
+        }
+        else {
             px->P = py;
             py->size_ += px->size_;
         }

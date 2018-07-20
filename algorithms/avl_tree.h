@@ -6,16 +6,17 @@
 #define ALGORITHMS_AVL_TREE_H_
 
 #include <algorithm>
+#include <stdexcept>
 #include <stdint.h>
 #include <utility>
-#include <stdexcept>
 
 namespace algorithms {
 namespace avl_tree {
 
 namespace internal {
 
-template <typename T> struct node {
+template <typename T>
+struct node {
     typedef T value_type;
 
     value_type value;
@@ -216,9 +217,11 @@ private:
             }
             if (p->value.first == key) {
                 return p;
-            } else if (compare(p->value.first, key)) {
+            }
+            else if (compare(p->value.first, key)) {
                 p = p->right;
-            } else { // p->value.first > key if key_compare 'less'
+            }
+            else { // p->value.first > key if key_compare 'less'
                 p = p->left;
             }
         }
@@ -241,7 +244,8 @@ private:
 
         if (compare(v.first, p->value.first)) {
             p->left = insert(p->left, v);
-        } else {
+        }
+        else {
             p->right = insert(p->right, v);
         }
         return balance(p);
@@ -262,9 +266,11 @@ private:
 
         if (k < p->value.first) {
             p->left = remove(p->left, k);
-        } else if (k > p->value.first) {
+        }
+        else if (k > p->value.first) {
             p->right = remove(p->right, k);
-        } else //  k == p->key
+        }
+        else //  k == p->key
         {
             node_type *q = p->left;
             node_type *r = p->right;

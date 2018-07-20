@@ -176,8 +176,7 @@ T *any_cast(any *o) {
 namespace test {
 
 void test();
-
 }
-} // namespace simple_any
+} // namespace any
 
 #endif /* INCUBATOR_ANY_H_ */

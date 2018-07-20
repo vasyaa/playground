@@ -75,7 +75,8 @@ using namespace internal;
 
 enum { RECURSIVE_SOLVER = 1, DP_SOLVER = 2 };
 
-template <int T> class WeightedJobScheduling;
+template <int T>
+class WeightedJobScheduling;
 
 // recursive solution
 template <>
@@ -95,7 +96,8 @@ private:
     int recursive_compute_opt(int j) {
         if (j == 0) {
             return 0;
-        } else {
+        }
+        else {
             int rc;
             rc = std::max(data[j].weight + recursive_compute_opt(p[j]),
                           recursive_compute_opt(j - 1));
@@ -141,7 +143,8 @@ private:
                 std::reference_wrapper<solvers::weighted_jobs_scheduling::Job>(
                     data[j]));
             recreate_path(p[j - 1]);
-        } else {
+        }
+        else {
             recreate_path(p[j - 1]);
         }
     }

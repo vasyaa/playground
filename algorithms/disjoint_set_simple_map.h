@@ -7,7 +7,8 @@
 namespace algorithms {
 namespace disjoint_set_simple_map {
 
-template <typename Key> struct disjoint_set {
+template <typename Key>
+struct disjoint_set {
     typedef std::map<Key, Key> parent_type;
     parent_type parent;
 

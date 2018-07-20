@@ -12,7 +12,8 @@ namespace weighted_jobs_scheduling {
 
 namespace {
 
-template <typename SolverType> void test_impl(const std::vector<Job> &arr) {
+template <typename SolverType>
+void test_impl(const std::vector<Job> &arr) {
     SolverType sch;
     for (auto &i : arr) {
         sch.add(i);

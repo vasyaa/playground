@@ -13,6 +13,7 @@ add_library(playground
     algorithms/disjoint_set.t.cpp
     algorithms/disjoint_set_simple.h
     algorithms/disjoint_set_simple_map.h
+    algorithms/least_frequently_used.h
     incubator/any.h
 #        mt/work_scheduling.h
     solvers/activity_selection_solver.h

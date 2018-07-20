@@ -12,7 +12,6 @@
 #include <cassert>
 
 #include <algorithm>
-#include <deque>
 #include <queue>
 #include <map>
 #include <ostream>
@@ -43,7 +42,6 @@ class least_frequently_used {
 public:
     using map_type = std::map<K, internal::node<V>>;
     using map_iterator = typename map_type::iterator;
-//    using queue_type = std::deque<map_iterator>;
     struct my_compare {
         bool operator()(const map_iterator &lh, const map_iterator &rh) {
             return lh->second.counter > rh->second.counter;
@@ -99,24 +97,7 @@ private:
 
 namespace test {
 
-inline void test() {
-    using lfu_type = least_frequently_used<int, int>;
-
-    lfu_type lfu(5);
-
-    for (int i = 0; i < 16; i++) {
-        lfu.add(i, i);
-        if(i == 5) {
-            lfu.get(i);
-            lfu.get(i);
-        }
-    }
-
-    lfu.print(std::cout);
-    std::cout << std::endl;
-
-    assert(lfu.get_count(5) == 3);
-}
+void test();
 
 } // namespace test
 

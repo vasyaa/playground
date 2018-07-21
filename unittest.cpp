@@ -1,6 +1,6 @@
-#include "algorithms/avl_tree.h"
-#include "algorithms/least_frequently_used.h"
+#include "incubator/least_frequently_used.h"
 #include "incubator/any.h"
+#include "algorithms/avl_tree.h"
 //#include "mt/work_scheduling.h"
 #include "solvers/activity_selection_solver.h"
 #include "solvers/graph.h"
@@ -21,8 +21,9 @@ using namespace std;
 
 int main(void) {
     least_frequently_used::test::test();
-    any::test::test();
     return 0;
+
+    any::test::test();
     solvers::graph::test();
     solvers::weighted_jobs_scheduling::test();
 

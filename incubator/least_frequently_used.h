@@ -14,8 +14,8 @@
 
 #include <algorithm>
 #include <map>
-#include <set>
 #include <ostream>
+#include <set>
 #include <vector>
 
 namespace least_frequently_used {
@@ -28,7 +28,8 @@ struct node {
     int counter;
 
     node() : counter(-1) {}
-    explicit node(const V &val, int counter_ = -1) : value(val), counter(counter_) {}
+    explicit node(const V &val, int counter_ = -1)
+        : value(val), counter(counter_) {}
 
     friend std::ostream &operator<<(std::ostream &str, const node &o) {
         str << "[value=" << o.value << " counter=" << o.counter << "]";
@@ -45,7 +46,8 @@ public:
     using object_iterator = typename map_objects_type::iterator;
 
     struct my_compare {
-        bool operator()(const object_iterator &lh, const object_iterator &rh) const {
+        bool operator()(const object_iterator &lh,
+                        const object_iterator &rh) const {
             return lh->second.counter < rh->second.counter;
         }
     };
@@ -75,6 +77,9 @@ public:
 
         int counter = m[key].counter;
         f[counter].erase(key);
+        if (f[counter].empty()) {
+            f.erase(counter);
+        }
         m.erase(key);
 
         return true;
@@ -85,22 +90,9 @@ public:
         return rc;
     }
 
-    void check_exists_throw(const K &key) {
-        if(!exists(key)) {
-            std::ostringstream str;
-            str << "Key not exists in obj_map key=" << key;
-            throw std::runtime_error(str.str());
-        }
-        int counter = m[key].counter;
-        if(f[counter].find(key) == f[counter].end()) {
-            std::ostringstream str;
-            str << "Key not exists in freq_map counter=" << counter
-                    << " key=" << key;
-            throw std::runtime_error(str.str());
-        }
-    }
-
     V &get(const K &key) {
+        check_exists_throw(key);
+
         int counter = m[key].counter;
         V value = m[key].value;
 
@@ -110,34 +102,10 @@ public:
         return m[key].value;
     }
 
-    int get_count(const K &key) {
-        return m[key].counter;
-    }
+    int get_count(const K &key) { return m[key].counter; }
 
-
-    void print_one_obj(const K& key) {
-        auto i = m.find(key);
-        std::cout << "[key=" << i->first << " value=" << i->second << "]";
-    }
-
-    void print_objs() {
-        auto i = m.begin();
-        for(; i != m.end(); ++i) {
-            print_one_obj(i->first);
-        }
-    }
-
-    void print_freq() {
-        auto j = f.begin();
-        for(; j != f.end(); ++j) {
-            auto i = j->second.begin();
-            for(; i != j->second.end(); ++i) {
-                std::cout << "counter=" << j->first << "->";
-                print_one_obj(*i);
-            }
-            std::cout << std::endl;
-        }
-    }
+    size_t size() { return m.size();}
+    size_t capacity() { return capacity_;}
 
     void print() {
         print_objs();
@@ -147,8 +115,48 @@ public:
 
 private:
     map_objects_type m;
-    map_freq_type    f;
+    map_freq_type f;
     size_t capacity_;
+
+    void check_exists_throw(const K &key) {
+        if (!exists(key)) {
+            std::ostringstream str;
+            str << "Key not exists in obj_map key=" << key;
+            throw std::runtime_error(str.str());
+        }
+        int counter = m[key].counter;
+        if (f[counter].find(key) == f[counter].end()) {
+            std::ostringstream str;
+            str << "Key not exists in freq_map counter=" << counter
+                << " key=" << key;
+            throw std::runtime_error(str.str());
+        }
+    }
+
+    void print_one_obj(const K &key) {
+        auto i = m.find(key);
+        std::cout << "[key=" << i->first << " value=" << i->second << "]";
+    }
+
+    void print_objs() {
+        std::cout << "objects=   ";
+        auto i = m.begin();
+        for (; i != m.end(); ++i) {
+            print_one_obj(i->first);
+        }
+    }
+
+    void print_freq() {
+        auto j = f.begin();
+        for (; j != f.end(); ++j) {
+            auto i = j->second.begin();
+            for (; i != j->second.end(); ++i) {
+                std::cout << "counter=" << j->first << "->";
+                print_one_obj(*i);
+            }
+            std::cout << std::endl;
+        }
+    }
 };
 
 namespace test {

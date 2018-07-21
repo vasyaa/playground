@@ -1,11 +1,12 @@
 #include "../incubator/least_frequently_used.h"
 
-#define ASSERT(expr) do {\
-    if(!(expr)) { \
-    std::cerr << "Assertion failed \"" #expr "\"" << std::endl; \
-    abort(); \
-    } \
-    } while(0)
+#define ASSERT(expr)                                                           \
+    do {                                                                       \
+        if (!(expr)) {                                                         \
+            std::cerr << "Assertion failed \"" #expr "\"" << std::endl;        \
+            abort();                                                           \
+        }                                                                      \
+    } while (0)
 
 namespace least_frequently_used {
 namespace test {
@@ -17,6 +18,7 @@ void test2() {
 
     for (int i = 0; i < 16; i++) {
         lfu.insert(i, i);
+
         if (i == 5) {
             lfu.get(i);
             lfu.get(i);
@@ -37,12 +39,10 @@ void test2() {
             lfu.get(i);
         }
         if (i == 9) {
-            lfu.print();
-            std::cout << std::endl;
+            lfu.print(); std::cout << std::endl;
             lfu.get(i);
             lfu.get(i);
-            lfu.print();
-            std::cout << std::endl;
+            lfu.print(); std::cout << std::endl;
         }
     }
 
@@ -66,9 +66,11 @@ void test1() {
     lfu.get(11);
     lfu.erase(12);
 
-    lfu.print();
-}
+    lfu.print(); std::cout << std::endl;
 
+    ASSERT(lfu.size() == 4);
+    ASSERT(lfu.capacity() == 5);
+}
 
 void test() {
     test1();

@@ -71,7 +71,7 @@ void test1() {
 
 
 void test() {
-//    test1();
+    test1();
     test2();
 }
 
